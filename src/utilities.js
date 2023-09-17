@@ -18,8 +18,8 @@ export const drawRect = (predictedValue, ctx) => {
   // Extract variables
 
   // Set styling
-  ctx.strokeStyle = labelMap[predictedValue]['color']
-  ctx.lineWidth = 1
+  // ctx.strokeStyle = labelMap[predictedValue]['color']
+  // ctx.lineWidth = 1
   ctx.fillStyle = labelMap[predictedValue]['color']
   ctx.font = '70px Arial'
   let x = 50;
@@ -29,7 +29,7 @@ export const drawRect = (predictedValue, ctx) => {
 
   // DRAW!!
   ctx.beginPath()
-  ctx.rect(x, y, width, height);
+  // ctx.rect(x, y, width, height);
   ctx.fillText(labelMap[predictedValue]['name'], (x+(width/2.5)), (y+260))
   ctx.stroke()
 
