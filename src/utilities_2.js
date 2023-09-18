@@ -18,19 +18,19 @@ export const drawRect = (predictedValue, ctx) => {
   // Extract variables
 
   // Set styling
-  // ctx.strokeStyle = labelMap[predictedValue]['color']
-  // ctx.lineWidth = 1
+  ctx.strokeStyle = labelMap[predictedValue]['color']
+  ctx.lineWidth = 1
   ctx.fillStyle = labelMap[predictedValue]['color']
   ctx.font = '70px Arial'
-  let x = 50;
+  let x = 25;
   let y = 25;
-  let width = 200;
-  let height = 300;
+  let width = 320;
+  let height = 240;
 
   // DRAW!!
   ctx.beginPath()
-  // ctx.rect(x, y, width, height);
-  ctx.fillText(labelMap[predictedValue]['name'], (x+(width/2.5)), (y+260))
+  ctx.rect(x, y, width, height);
+  ctx.fillText(labelMap[predictedValue]['name'], (x+(width/2.5)), (y+310))
   
   ctx.stroke()
 

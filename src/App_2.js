@@ -9,6 +9,7 @@ import { drawRect } from "./utilities_2";
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const canvasRef2 = useRef(null);
 
   function argMax(array) {
     return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
@@ -53,6 +54,9 @@ function App() {
       // Set canvas height and width
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
+
+      canvasRef2.current.width = videoWidth;
+      canvasRef2.current.height = videoHeight;
 
       // const [url, setUrl] = useState(null)
 
@@ -107,8 +111,12 @@ function App() {
       // console.log(classes)
       // const scores = await obj[4].array()
 
+      const canvas2 = document.getElementById("canvas2");
+      // Draw mesh
+      const ctx2 = canvasRef2.current.getContext("2d");
+
       // ctx.drawImage(url);
-      requestAnimationFrame(() => { drawRect(predictedValue, ctx) });
+      requestAnimationFrame(() => { drawRect(predictedValue, ctx2) });
 
       tf.dispose(img);
       tf.dispose(resized);
@@ -133,12 +141,12 @@ function App() {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 600,
+            left: 700,
             right: 0,
             textAlign: "center",
             zindex: 9,
-            width: 320,
-            height: 240,
+            width: 640,
+            height: 480,
           }}
         />
 
@@ -150,7 +158,24 @@ function App() {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
-            left: -400,
+            left: -2500,
+            right: 0,
+            textAlign: "center",
+            zindex: 8,
+            width: 640,
+            height: 480,
+          }}
+        />
+        <canvas
+          ref={canvasRef2}
+          id="canvas2"
+          // mirrored={true}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            // top: 0,
+            left: 700,
             right: 0,
             textAlign: "center",
             zindex: 8,
