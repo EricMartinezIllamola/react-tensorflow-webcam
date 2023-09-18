@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import Webcam from "react-webcam";
 import "./App.css";
-import { drawRect } from "./utilities";
+import { drawRect } from "./utilities_2";
 
 
 function App() {
@@ -54,7 +54,28 @@ function App() {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
+      // const [url, setUrl] = useState(null)
+
+      // React.useCallback(
+      //   async () => {
+      //     const imageSrc = webcamRef.current.getScreenshot();
+      //     setUrl(imageSrc)
+      //   },
+      //   [webcamRef]
+      // );
+
+      // const imageSrc = webcamRef.current.getScreenshot()
+
+      // const ctx_2 = canvasRef.current.getContext("2d");
+      // drawRect(obj, ctx);
+      // const image = ctx_2.drawImage(video, 0, 0, 250, 250, 50, 50, 250, 250);
+      // const image = ctx_2.drawImage(imageSrc);
+
+
+
       // const cuadrado = video[top:bottom, right:left]
+
+      // const frame = webcamRef.current.getScreenshot()
 
       // Make Detections
       const img = tf.browser.fromPixels(video)
@@ -80,6 +101,8 @@ function App() {
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
       // drawRect(obj, ctx);
+      ctx.drawImage(video, 0, 0, 250, 250, 50, 50, 250, 250);
+      // ctx.drawImage(url);
       requestAnimationFrame(() => { drawRect(predictedValue, ctx) });
 
       tf.dispose(img);
@@ -105,7 +128,7 @@ function App() {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 0,
+            left: 400,
             right: 0,
             textAlign: "center",
             zindex: 9,
@@ -121,7 +144,7 @@ function App() {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 0,
+            left: -500,
             right: 0,
             textAlign: "center",
             zindex: 8,

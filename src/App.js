@@ -1,7 +1,6 @@
 // Import dependencies
 import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
-// import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
 import "./App.css";
 import { drawRect } from "./utilities";
@@ -11,27 +10,37 @@ function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
+  function argMax(array) {
+    return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+  }
+
   // Main function
 
   const runCoco = async () => {
-    let model_URL = "file:///model-js-04/model.json";
-    let model_URL_1 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
-    let model_URL_2 = "https://tensorflowjsrealtimemodel.s3.au-syd.cloud-object-storage.appdomain.cloud/model.json";
-    const model = await tf.loadGraphModel(model_URL_1);
+
+    let model_URL = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
+
+    // let model_URL_1 = "file:///model-js-04/model.json";
+    // let model_URL_2 = "https://tensorflowjsrealtimemodel.s3.au-syd.cloud-object-storage.appdomain.cloud/model.json";
+
+    const model = await tf.loadGraphModel(model_URL);
     console.log("Model loaded.");
+
     //  Loop and detect hands
     setInterval(() => {
       detect(model);
-    }, 16.7);
+    }, 500);
   };
 
   const detect = async (model) => {
+
     // Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
+
       // Get Video Properties
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
@@ -45,29 +54,40 @@ function App() {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
+      // const cuadrado = video[top:bottom, right:left]
+
       // Make Detections
       const img = tf.browser.fromPixels(video)
-      const resized = tf.image.resizeBilinear(img, [640, 480])
-      const casted = resized.cast("int32")
-      const expanded = casted.expandDims(0)
-      const obj = await model.executeAsync(expanded)
-      console.log(obj)
+      // console.log(img)
+      const resized = tf.image.resizeBilinear(img, [56, 56])
+      // console.log(resized)
+      // const casted = resized.cast("int32")
+      // console.log(casted)
+      const expanded = resized.expandDims(0)
+      // console.log(expanded)
+      const obj = await model.execute(expanded)
+      obj.print()
+      const predictedValue = argMax(obj.arraySync()[0]);
+      console.log(predictedValue);
+
+      // console.log(obj)
 
 
-      const boxes = await obj[1].array()
-      const classes = await obj[2].array()
-      const scores = await obj[4].array()
+      // const classes = await obj[2].array()
+      // console.log(classes)
+      // const scores = await obj[4].array()
 
       // Draw mesh
       const ctx = canvasRef.current.getContext("2d");
       // drawRect(obj, ctx);
-      requestAnimationFrame(() => { drawRect(boxes[0], classes[0], scores[0], 0.8, videoWidth, videoHeight, ctx) });
+      requestAnimationFrame(() => { drawRect(predictedValue, ctx) });
 
       tf.dispose(img);
       tf.dispose(resized);
-      tf.dispose(casted);
+      // // tf.dispose(casted);
       tf.dispose(expanded);
       tf.dispose(obj);
+      tf.dispose(predictedValue);
     }
   };
 
@@ -80,6 +100,7 @@ function App() {
           className="web"
           ref={webcamRef}
           muted={true}
+          // mirrored={true}  
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -95,6 +116,7 @@ function App() {
 
         <canvas
           ref={canvasRef}
+          // mirrored={true}
           style={{
             position: "absolute",
             marginLeft: "auto",
