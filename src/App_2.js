@@ -29,7 +29,7 @@ function App() {
     //  Loop and detect hands
     setInterval(() => {
       detect(model);
-    }, 500);
+    }, 100);
   };
 
   const detect = async (model) => {
@@ -76,10 +76,19 @@ function App() {
       // const cuadrado = video[top:bottom, right:left]
 
       // const frame = webcamRef.current.getScreenshot()
+      const canvas = document.getElementById("canvas");
+
+      // Draw mesh
+      const ctx = canvasRef.current.getContext("2d");
+      ctx.drawImage(video, 25, 25, 320, 240, 0, 0, 640, 480);
+      // var recuadro = canvas.toDataURL("image/jpeg");
+      // console.log(recuadro)
+      // const img2 = tf.browser.fromPixels(canvas)
+      // console.log(img2)
 
       // Make Detections
-      const img = tf.browser.fromPixels(video)
-      // console.log(img)
+      const img = tf.browser.fromPixels(canvas)
+      console.log(img)
       const resized = tf.image.resizeBilinear(img, [56, 56])
       // console.log(resized)
       // const casted = resized.cast("int32")
@@ -87,9 +96,9 @@ function App() {
       const expanded = resized.expandDims(0)
       // console.log(expanded)
       const obj = await model.execute(expanded)
-      obj.print()
+      // obj.print()
       const predictedValue = argMax(obj.arraySync()[0]);
-      console.log(predictedValue);
+      // console.log(predictedValue);
 
       // console.log(obj)
 
@@ -98,10 +107,6 @@ function App() {
       // console.log(classes)
       // const scores = await obj[4].array()
 
-      // Draw mesh
-      const ctx = canvasRef.current.getContext("2d");
-      // drawRect(obj, ctx);
-      ctx.drawImage(video, 0, 0, 250, 250, 50, 50, 250, 250);
       // ctx.drawImage(url);
       requestAnimationFrame(() => { drawRect(predictedValue, ctx) });
 
@@ -128,23 +133,24 @@ function App() {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 400,
+            left: 600,
             right: 0,
             textAlign: "center",
             zindex: 9,
-            width: 640,
-            height: 480,
+            width: 320,
+            height: 240,
           }}
         />
 
         <canvas
           ref={canvasRef}
+          id="canvas"
           // mirrored={true}
           style={{
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
-            left: -500,
+            left: -400,
             right: 0,
             textAlign: "center",
             zindex: 8,
