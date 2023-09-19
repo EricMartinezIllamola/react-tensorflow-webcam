@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import Webcam from "react-webcam";
 import "./App.css";
-import { drawRect } from "./utilities_2";
+import { drawRect } from "./utilities_3";
 
 
 function App() {
@@ -15,14 +15,20 @@ function App() {
     return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
   }
 
+  function randomElement(array) {
+    return array[Math.floor(Math.random() * array.length)]
+  }
+
+  const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  let [value, setValue] = useState(randomElement(numArray));
+  let [results, setResults] = useState([]);
+  let [points, setPoints] = useState(0);
+
   // Main function
 
   const runCoco = async () => {
 
     let model_URL = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
-
-    // let model_URL_1 = "file:///model-js-04/model.json";
-    // let model_URL_2 = "https://tensorflowjsrealtimemodel.s3.au-syd.cloud-object-storage.appdomain.cloud/model.json";
 
     const model = await tf.loadGraphModel(model_URL);
     console.log("Model loaded.");
@@ -30,7 +36,7 @@ function App() {
     //  Loop and detect hands
     setInterval(() => {
       detect(model);
-    }, 100);
+    }, 500);
   };
 
   const detect = async (model) => {
@@ -92,7 +98,7 @@ function App() {
 
       // Make Detections
       const img = tf.browser.fromPixels(canvas)
-      console.log(img)
+      // console.log(img)
       const resized = tf.image.resizeBilinear(img, [56, 56])
       // console.log(resized)
       // const casted = resized.cast("int32")
@@ -103,13 +109,26 @@ function App() {
       // obj.print()
       const predictedValue = argMax(obj.arraySync()[0]);
       // console.log(predictedValue);
+      results.push(predictedValue);
+      // console.log(results);
+      results.slice(-4)
+      // console.log(results.filter(x => x == value).length);
+
+      if (results.filter(x => x == value).length == 3) {
+        // setResults([]);
+        // setPoints(points + 1);
+        results = [];
+        points = points + 1;
+        let rE = randomElement(numArray);
+        value = rE;
+        // setValue(rE)
+      };
+
+      // console.log(results);
+      console.log(value);
+
 
       // console.log(obj)
-
-
-      // const classes = await obj[2].array()
-      // console.log(classes)
-      // const scores = await obj[4].array()
 
       const canvas2 = document.getElementById("canvas2");
       // Draw mesh
@@ -127,6 +146,7 @@ function App() {
     }
   };
 
+
   useEffect(() => { runCoco() }, []);
 
   return (
@@ -141,7 +161,7 @@ function App() {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 700,
+            left: 500,
             right: 0,
             textAlign: "center",
             zindex: 9,
@@ -158,7 +178,7 @@ function App() {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
-            left: -650,
+            left: -2500,
             right: 0,
             textAlign: "center",
             zindex: 8,
@@ -175,7 +195,7 @@ function App() {
             marginLeft: "auto",
             marginRight: "auto",
             // top: 0,
-            left: 700,
+            left: 500,
             right: 0,
             textAlign: "center",
             zindex: 8,
@@ -183,6 +203,9 @@ function App() {
             height: 480,
           }}
         />
+        <img className="img_ejemplo" src={require("./SignosNumeros/" + value + ".jpg")}></img>
+        <div><p className="num_ejemplo">{value}</p></div>
+        <div><p className="points">{points}</p></div>
       </header>
     </div>
   );
