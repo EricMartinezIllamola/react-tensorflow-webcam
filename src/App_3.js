@@ -5,22 +5,24 @@ import Webcam from "react-webcam";
 import "./App.css";
 import { drawRect } from "./utilities_3";
 
+let a = 0;
+
+function argMax(array) {
+  return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+}
+
+function randomElement(array) {
+  return array[Math.floor(Math.random() * array.length)]
+}
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const canvasRef2 = useRef(null);
 
-  function argMax(array) {
-    return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
-  }
-
-  function randomElement(array) {
-    return array[Math.floor(Math.random() * array.length)]
-  }
-
   const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  let [value, setValue] = useState(randomElement(numArray));
+  let [referencia, setReferencia] = useState(3);
+  // console.log(a++);
   let [results, setResults] = useState([]);
   let [points, setPoints] = useState(0);
 
@@ -114,18 +116,24 @@ function App() {
       results.slice(-4)
       // console.log(results.filter(x => x == value).length);
 
-      if (results.filter(x => x == value).length == 3) {
-        // setResults([]);
-        // setPoints(points + 1);
+
+      if (results.filter(x => x == referencia).length == 3) {
+        const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        setResults([]);
+        setPoints(points + 1);
         results = [];
         points = points + 1;
-        let rE = randomElement(numArray);
-        value = rE;
+        let rE = numArray[Math.floor(Math.random() * numArray.length)];
+        setReferencia(rE);
+        referencia = rE;
         // setValue(rE)
+        console.log("rE"+rE);
+        console.log(referencia);
       };
 
       // console.log(results);
-      console.log(value);
+      console.log(referencia);
+
 
 
       // console.log(obj)
@@ -151,62 +159,62 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <Webcam
-          className="web"
-          ref={webcamRef}
-          muted={true}
-          // mirrored={true}  
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 500,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
 
-        <canvas
-          ref={canvasRef}
-          id="canvas"
-          // mirrored={true}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: -2500,
-            right: 0,
-            textAlign: "center",
-            zindex: 8,
-            width: 640,
-            height: 480,
-          }}
-        />
-        <canvas
-          ref={canvasRef2}
-          id="canvas2"
-          // mirrored={true}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            // top: 0,
-            left: 500,
-            right: 0,
-            textAlign: "center",
-            zindex: 8,
-            width: 640,
-            height: 480,
-          }}
-        />
-        <img className="img_ejemplo" src={require("./SignosNumeros/" + value + ".jpg")}></img>
-        <div><p className="num_ejemplo">{value}</p></div>
-        <div><p className="points">{points}</p></div>
-      </header>
+      <Webcam
+        className="web"
+        ref={webcamRef}
+        muted={true}
+        // mirrored={true}  
+        style={{
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 500,
+          right: 0,
+          textAlign: "center",
+          zindex: 9,
+          width: 640,
+          height: 480,
+        }}
+      />
+
+      <canvas
+        ref={canvasRef}
+        id="canvas"
+        // mirrored={true}
+        style={{
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: -2500,
+          right: 0,
+          textAlign: "center",
+          zindex: 8,
+          width: 640,
+          height: 480,
+        }}
+      />
+      <canvas
+        ref={canvasRef2}
+        id="canvas2"
+        // mirrored={true}
+        style={{
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          // top: 0,
+          left: 500,
+          right: 0,
+          textAlign: "center",
+          zindex: 8,
+          width: 640,
+          height: 480,
+        }}
+      />
+      <img className="img_ejemplo" src={require("./SignosNumeros/" + referencia + ".jpg")}></img>
+      <div><p className="num_ejemplo">{referencia}</p></div>
+      <div><p className="points">{points}</p></div>
+
     </div>
   );
 }
