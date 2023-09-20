@@ -9,7 +9,7 @@ import Global_02 from './global_02';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Global_02 />
+    <Num_03 />
   </React.StrictMode>,
   document.getElementById('root')
 );

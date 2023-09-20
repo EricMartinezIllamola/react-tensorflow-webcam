@@ -5,7 +5,6 @@ import Webcam from "react-webcam";
 import "./App.css";
 import { drawRect } from "./utilities_3";
 
-let a = 0;
 
 function argMax(array) {
   return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
@@ -21,10 +20,12 @@ function App() {
   const canvasRef2 = useRef(null);
 
   const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  let [referencia, setReferencia] = useState(3);
-  // console.log(a++);
+  const [referencia, setReferencia] = useState(3);
   let [results, setResults] = useState([]);
-  let [points, setPoints] = useState(0);
+  const [points, setPoints] = useState(0);
+  const [timer, setTimer] = useState(20);
+
+  // let myInterval = "";
 
   // Main function
 
@@ -37,12 +38,18 @@ function App() {
     console.log("Model loaded.");
 
     //  Loop and detect hands
-    setInterval(() => {
+    // const myInterval = setInterval(myTimer, 1000);
+
+    const myInterval = setInterval(() => {
       detect(model);
     }, 500);
   };
 
   const detect = async (model) => {
+
+    if (timer == 0) {
+      console.log("Final")
+    }
 
     // Check data is available
     if (
@@ -114,26 +121,27 @@ function App() {
       // console.log(predictedValue);
       results.push(predictedValue);
       // console.log(results);
-      results.slice(-4)
+      setResults(results.slice(-5));
+      results = results.slice(-5);
+      console.log(results);
       // console.log(results.filter(x => x == value).length);
 
 
-      if (results.filter(x => x == referencia).length == 3) {
-        const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-        setResults([]);
-        setPoints(points + 1);
-        results = [];
-        points = points + 1;
-        let rE = numArray[Math.floor(Math.random() * numArray.length)];
-        setReferencia(rE);
-        referencia = rE;
-        // setValue(rE)
-        console.log("rE"+rE);
-        console.log(referencia);
-      };
+      // if (results.filter(x => x == referencia).length == 4) {
+      //   setResults([]);
+      //   setPoints(points + 1);
+      //   let rE = randomElement(numArray);
+      //   setReferencia(rE);
+      //   // results = [];
+      //   // points = points + 1;
+      //   // referencia = rE;
+      //   // setValue(rE)
+      //   // console.log("rE"+rE);
+      //   // console.log(referencia);
+      // };
 
       // console.log(results);
-      console.log(referencia);
+      // console.log(referencia);
 
 
 
@@ -152,11 +160,32 @@ function App() {
       tf.dispose(expanded);
       tf.dispose(obj);
       tf.dispose(predictedValue);
+      // if (timer > 0) {
+      //   clearInterval(myInterval)
+      // }
     }
   };
 
 
+  useEffect(() => {
+
+    if (results.filter(x => x == referencia).length == 4) {
+      setResults([]);
+      setPoints(points + 1);
+      // results = [];
+      // points = points + 1;
+      setReferencia(randomElement(numArray));
+    }
+  }, [results]);
+
   useEffect(() => { runCoco() }, []);
+
+  useEffect(() => {
+    timer > 0 && setTimeout(() => setTimer(timer - 1), 1000);
+    if (timer == 0) {
+      console.log("final")
+    }
+  }, [timer]);
 
   return (
     <div className="App">
@@ -215,6 +244,7 @@ function App() {
       <img className="img_ejemplo" src={require("./SignosNumeros/" + referencia + ".jpg")}></img>
       <div><p className="num_ejemplo">{referencia}</p></div>
       <div><p className="points">{points}</p></div>
+      <div><p className="timer">{timer<10? "0"+timer: timer}</p></div>
 
     </div>
   );

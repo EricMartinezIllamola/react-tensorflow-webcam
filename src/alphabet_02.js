@@ -31,7 +31,7 @@ function App() {
     //  Loop and detect hands
     setInterval(() => {
       detect(model);
-    }, 100);
+    }, 500);
   };
 
   const detect = async (model) => {
@@ -93,7 +93,7 @@ function App() {
 
       // Make Detections
       const img = tf.browser.fromPixels(canvas)
-      console.log(img)
+      // console.log(img)
       const resized = tf.image.resizeBilinear(img, [56, 56])
       // console.log(resized)
       // const casted = resized.cast("int32")

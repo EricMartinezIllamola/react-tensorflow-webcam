@@ -60,6 +60,15 @@
   color: orange;
 }
 
+.timer {
+  position: absolute;
+  top: 0%;
+  left: 30%;
+  font-size: 50px;
+  margin: 0;
+  color: orange;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
