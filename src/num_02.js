@@ -19,12 +19,13 @@ function App() {
 
   const runCoco = async () => {
 
-    let model_URL = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
+    let num_model_04 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
+    let num_model_06 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-06/main/model.json";
 
     // let model_URL_1 = "file:///model-js-04/model.json";
     // let model_URL_2 = "https://tensorflowjsrealtimemodel.s3.au-syd.cloud-object-storage.appdomain.cloud/model.json";
 
-    const model = await tf.loadGraphModel(model_URL);
+    const model = await tf.loadGraphModel(num_model_04);
     console.log("Model loaded.");
 
     //  Loop and detect hands

@@ -30,9 +30,10 @@ function App() {
 
   const runCoco = async () => {
 
-    let model_URL = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
+    let num_model_04 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
+    let num_model_06 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-06/main/model.json";
 
-    const model = await tf.loadGraphModel(model_URL);
+    const model = await tf.loadGraphModel(num_model_06);
     console.log("Model loaded.");
 
     //  Loop and detect hands
