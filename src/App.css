@@ -63,7 +63,16 @@
 .timer {
   position: absolute;
   top: 0%;
-  left: 30%;
+  left: 70%;
+  font-size: 50px;
+  margin: 0;
+  color: red;
+}
+
+.btn {
+  position: absolute;
+  top: 5%;
+  left: 17%;
   font-size: 50px;
   margin: 0;
   color: orange;
