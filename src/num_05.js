@@ -71,13 +71,13 @@ function App() {
             canvasRef2.current.width = videoWidth;
             canvasRef2.current.height = videoHeight;
 
-            if (parseInt(localStorage.getItem("x")) != x) {
-              x = parseInt(localStorage.getItem("x"));
-            }
+            // if (parseInt(localStorage.getItem("x")) != x) {
+            //   x = parseInt(localStorage.getItem("x"));
+            // }
 
-            if (parseInt(localStorage.getItem("y")) != y) {
-              y = parseInt(localStorage.getItem("y"));
-            }
+            // if (parseInt(localStorage.getItem("y")) != y) {
+            //   y = parseInt(localStorage.getItem("y"));
+            // }
 
             // const frame = webcamRef.current.getScreenshot()
             const canvas = document.getElementById("canvas");
@@ -143,6 +143,9 @@ function App() {
   const save = () => {
     localStorage.setItem("x", document.getElementById("x").value);
     localStorage.setItem("y", document.getElementById("y").value);
+    setX(parseInt(localStorage.getItem("x")));
+    setY(parseInt(localStorage.getItem("y")));
+
   }
 
   useEffect(() => {
