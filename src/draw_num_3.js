@@ -13,19 +13,19 @@ const labelMap = {
 }
 
 // Define a drawing function
-export const drawRect = (predictedValue, ctx) => {
+export const drawRect = (predictedValue, ctx, x, y, width, height) => {
 
   // Extract variables
+  // let x = 25;
+  // let y = 25;
+  // let width = 320;
+  // let height = 240;
 
   // Set styling
   ctx.strokeStyle = labelMap[predictedValue]['color']
   ctx.lineWidth = 1
   ctx.fillStyle = labelMap[predictedValue]['color']
   ctx.font = '70px Arial'
-  let x = 25;
-  let y = 25;
-  let width = 320;
-  let height = 240;
 
   // DRAW!!
   ctx.beginPath()

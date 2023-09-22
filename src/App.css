@@ -38,15 +38,15 @@
 
 .img_ejemplo {
   position: absolute;
-  bottom: 30%;
-  left: 20%;
+  top: 30%;
+  left: 25%;
   transform: scale(1.5);
 }
 
 .num_ejemplo {
   position: absolute;
-  top: 20%;
-  left: 21%;
+  top: 27%;
+  left: 10%;
   font-size: 100px;
   margin: 0;
 }
@@ -69,13 +69,61 @@
   color: red;
 }
 
-.btn {
+.btn-dz {
   position: absolute;
-  top: 5%;
+  top: 25%;
   left: 17%;
   font-size: 50px;
   margin: 0;
   color: orange;
+}
+
+.btn-start {
+  position: absolute;
+  top: 55%;
+  left: 17%;
+  font-size: 50px;
+  margin: 0;
+  color: orange;
+}
+
+.btn-save {
+  position: absolute;
+  bottom: -53.5%;
+  left: 65%;
+  font-size: 50px;
+  margin: 0;
+  color: orange;
+}
+
+.btn-reset {
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+  font-size: 50px;
+  margin: 0;
+  color: orange;
+}
+
+.btn-exit {
+  position: absolute;
+  bottom: 10%;
+  left: 19%;
+  font-size: 50px;
+  margin: 0;
+  color: orange;
+}
+
+form {
+  position: absolute;
+  top: 10%;
+  left: 15%;
+  font-size: 20px;
+  margin: 0;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 @keyframes App-logo-spin {
