@@ -16,7 +16,7 @@ import Players from "./player_selector";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Quizz />
+    <Players />
   </React.StrictMode>,
   document.getElementById('root')
 );

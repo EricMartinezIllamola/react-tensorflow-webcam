@@ -15,7 +15,9 @@ function shuffleArray(array) {
 
 function App() {
 
-    const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35];
+    // const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 
     const [referencia, setReferencia] = useState(randomElement(numArray));
     const [seleccionados, setSeleccionados] = useState([]);
@@ -66,13 +68,13 @@ function App() {
                     <div><p>{"Puntos: " + points}</p></div>
                     <div><p>{"Partida: " + partidas + "/5"}</p></div>
                 </div>
-                <img className="quizz_num" src={require("./numbers/" + referencia + ".png")}></img>
+                <img className="quizz_num" src={require("./global/" + referencia + ".png")}></img>
                 <img className={end? "quizz_mono quizz_mono_salta" :"quizz_mono"} src={require("./mascots/monosentado.png")}></img>
             </div>
             <div className="quizz_down">
-                <button onClick={() => { comprobar(s1) }}><img className="quizz_numB" src={require("./numbers/" + s1 + "B.png")}></img></button>
-                <button onClick={() => { comprobar(s2) }}><img className="quizz_numB" src={require("./numbers/" + s2 + "B.png")}></img></button>
-                <button onClick={() => { comprobar(s3) }}><img className="quizz_numB" src={require("./numbers/" + s3 + "B.png")}></img></button>
+                <button onClick={() => { comprobar(s1) }}><img className="quizz_numB" src={require("./global/" + s1 + "B.png")}></img></button>
+                <button onClick={() => { comprobar(s2) }}><img className="quizz_numB" src={require("./global/" + s2 + "B.png")}></img></button>
+                <button onClick={() => { comprobar(s3) }}><img className="quizz_numB" src={require("./global/" + s3 + "B.png")}></img></button>
             </div>
 
         </div>
