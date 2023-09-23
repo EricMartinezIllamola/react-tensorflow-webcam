@@ -25,39 +25,56 @@ function App() {
 
     const [points, setPoints] = useState(0);
     const [partidas, setPartidas] = useState(0);
+    const [end, setEnd] = useState(false);
 
-const comprobar = (data) => {
-    if (partidas < 5) {
-        if (data == referencia) {
-            setPoints(points + 1);
-        };
-        setReferencia(randomElement(numArray));
-        setPartidas(partidas + 1);
-        console.log(partidas);
-    };
-};
+    const comprobar = (data) => {
+        if (partidas < 5) {
+            if (data === referencia) {
+                setPoints(points + 1);
+            }
+            setReferencia(randomElement(numArray));
+            setPartidas(partidas + 1);
+        }
+    }
 
     useEffect(() => {
-        let newArray = numArray;
+        let newArray = [];
+        newArray = numArray;
+        setSeleccionados([]);
         seleccionados.push(referencia);
-        newArray= newArray.filter(num => num !=referencia);
+        newArray = newArray.filter(num => num !== referencia);
         seleccionados.push(randomElement(newArray));
-        newArray= newArray.filter(num => num !=seleccionados[1]);
+        newArray = newArray.filter(num => num !== seleccionados[1]);
         seleccionados.push(randomElement(newArray));
         shuffleArray(seleccionados);
         setS1(seleccionados[0]);
         setS2(seleccionados[1]);
         setS3(seleccionados[2]);
+        if (partidas === 5) {
+            setEnd(true);
+        }
     }, [referencia])
 
+    // useEffect(() => {
+        
+    // }, [true])
+
     return (
-        <div>
-            <div><p>{referencia}</p></div>
-            <button onClick={comprobar(s1)}><img  src={require("./SignosNumeros/" + s1 + ".jpg")}></img></button>
-            <button onClick={comprobar(s2)}><img  src={require("./SignosNumeros/" + s2 + ".jpg")}></img></button>
-            <button onClick={comprobar(s3)}><img  src={require("./SignosNumeros/" + s3 + ".jpg")}></img></button>
-            <div><p>{"Puntos: " + points}</p></div>
-            <div><p>{"Partida: " + partidas + "/5"}</p></div>
+        <div className="quizz">
+            <div className="quizz_up">
+                <div className="quizz_points">
+                    <div><p>{"Puntos: " + points}</p></div>
+                    <div><p>{"Partida: " + partidas + "/5"}</p></div>
+                </div>
+                <img className="quizz_num" src={require("./numbers/" + referencia + ".png")}></img>
+                <img className={end? "quizz_mono quizz_mono_salta" :"quizz_mono"} src={require("./mascots/monosentado.png")}></img>
+            </div>
+            <div className="quizz_down">
+                <button onClick={() => { comprobar(s1) }}><img className="quizz_numB" src={require("./numbers/" + s1 + "B.png")}></img></button>
+                <button onClick={() => { comprobar(s2) }}><img className="quizz_numB" src={require("./numbers/" + s2 + "B.png")}></img></button>
+                <button onClick={() => { comprobar(s3) }}><img className="quizz_numB" src={require("./numbers/" + s3 + "B.png")}></img></button>
+            </div>
+
         </div>
     )
 }

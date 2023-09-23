@@ -145,7 +145,6 @@ function App() {
     localStorage.setItem("y", document.getElementById("y").value);
     setX(parseInt(localStorage.getItem("x")));
     setY(parseInt(localStorage.getItem("y")));
-
   }
 
   useEffect(() => {
