@@ -3,7 +3,7 @@ import "./players.css";
 
 function App() {
 
-    const [degrees, setDegrees ] = useState(0);
+    const [degrees, setDegrees] = useState(0);
 
     const prev = () => {
         setDegrees(degrees + 36);
@@ -16,7 +16,14 @@ function App() {
     return (
         <div className="body">
             <div className="container">
-                <div className="box" style={{transform: `perspective(1000px) rotateY(${degrees}deg)`}}>
+                <div className="btns2">
+                    <div className="player">
+                        <label>Name:</label>
+                        <input></input>
+                    </div>
+                    <button className="continuar">Continuar</button>
+                </div>
+                <div className="box" style={{ transform: `perspective(1000px) rotateY(${degrees}deg)` }}>
                     <span ><img src={require("./avatar/1.jpg")}></img></span>
                     <span ><img src={require("./avatar/2.jpg")}></img></span>
                     <span ><img src={require("./avatar/3.jpg")}></img></span>
@@ -29,8 +36,8 @@ function App() {
                     <span ><img src={require("./avatar/10.jpg")}></img></span>
                 </div>
                 <div className="btns">
-                <div className="btn prev" onClick={() => {prev()}}></div>
-                <div className="btn next" onClick={() => {next()}}></div>
+                    <div className="btn prev" onClick={() => { prev() }}></div>
+                    <div className="btn next" onClick={() => { next() }}></div>
                 </div>
             </div>
         </div>

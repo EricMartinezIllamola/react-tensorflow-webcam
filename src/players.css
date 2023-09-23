@@ -44,6 +44,52 @@
   transition: 1000ms;
 }
 
+.btns2 {
+  position: absolute;
+  top: 100px;
+  display: flex;
+  /* gap: 30px; */
+  color: #fff;
+}
+
+.btns2 .player {
+  position: absolute;
+  left: -250px;
+  display: flex;
+  gap: 30px;
+  font-size: 30px;
+}
+
+.btns2 .player input {
+  font-size: 30px;
+  color: #fff;
+  background-color: #0000;
+  border: 2px solid #fff;
+  border-radius: 7px;
+  padding: 2px;
+  padding-left: 7px;
+}
+
+.btns2 button {
+  position: absolute;
+  left: 400px;
+  display: flex;
+  gap: 30px;
+  font-size: 30px;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.btns2 button:hover {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+}
+
 .box {
   position: relative;
   width: 170px;
