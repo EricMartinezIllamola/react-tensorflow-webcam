@@ -10,11 +10,13 @@ import Alpha_02 from './alphabet_02';
 import Alpha_05 from './alphabet_05';
 import Global_02 from './global_02';
 import Global_05 from './global_05';
-import Quiz from "./quizz"
+import Quizz from "./quizz";
+import Players from "./player_selector";
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Quiz />
+    <Quizz />
   </React.StrictMode>,
   document.getElementById('root')
 );

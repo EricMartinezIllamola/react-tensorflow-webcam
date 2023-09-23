@@ -3,7 +3,6 @@ import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import Webcam from "react-webcam";
 import "./App.css";
-// import { drawRect } from "./draw_num_3";
 
 
 function argMax(array) {
@@ -91,7 +90,7 @@ function App() {
             const resized = tf.image.resizeBilinear(img, [56, 56])
             const expanded = resized.expandDims(0)
             const obj = await model.execute(expanded)
-            const predictedValue = argMax(obj.arraySync()[0]);
+            const predictedValue = argMax(obj.arraySync()[0]); 
             results.push(predictedValue);
             setResults(results.slice(-10));
             results = results.slice(-10);
