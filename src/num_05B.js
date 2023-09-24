@@ -2,8 +2,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import Webcam from "react-webcam";
-import "./camara.css";
-// import { drawRect } from "./draw_num_3";
+// import "./camara.css";
+import "./camara_05.css";
 
 
 function argMax(array) {
@@ -19,14 +19,15 @@ function App() {
   const canvasRef = useRef(null);
   const canvasRef2 = useRef(null);
 
-  const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33];
+  const numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [referencia, setReferencia] = useState(randomElement(numArray));
   let [results, setResults] = useState([]);
   const [points, setPoints] = useState(0);
-  const [timer, setTimer] = useState(20);
+  const [timer, setTimer] = useState(90);
 
   const [start, setStart] = useState(false);
-  const [dz, setDz] = useState(false);
+  const [end, setEnd] = useState(false);
+  // const [dz, setDz] = useState(false);
 
   // Detection Zone y Cuadrado
   let [x, setX] = useState(localStorage.getItem("x") ? parseInt(localStorage.getItem("x")) : 25);
@@ -34,51 +35,14 @@ function App() {
   const [width, setWidth] = useState(320);
   const [height, setHeight] = useState(240);
 
-  const labelMap = {
-    0: { name: '0', color: 'purple' },
-    1: { name: '1', color: 'red' },
-    2: { name: '2', color: 'yellow' },
-    3: { name: '3', color: 'lime' },
-    4: { name: '4', color: 'blue' },
-    5: { name: '5', color: 'orange' },
-    6: { name: '6', color: 'black' },
-    7: { name: '7', color: 'white' },
-    8: { name: '8', color: 'darkred' },
-    9: { name: '9', color: 'darkblue' },
-    10: { name: 'A', color: 'purple' },
-    11: { name: 'B', color: 'red' },
-    12: { name: 'C', color: 'yellow' },
-    13: { name: 'D', color: 'lime' },
-    14: { name: 'E', color: 'blue' },
-    15: { name: 'F', color: 'orange' },
-    16: { name: 'G', color: 'black' },
-    17: { name: 'H', color: 'white' },
-    18: { name: 'I', color: 'darkred' },
-    19: { name: 'K', color: 'darkblue' },
-    20: { name: 'L', color: 'purple' },
-    21: { name: 'M', color: 'red' },
-    22: { name: 'N', color: 'yellow' },
-    23: { name: 'O', color: 'lime' },
-    24: { name: 'P', color: 'blue' },
-    25: { name: 'Q', color: 'orange' },
-    26: { name: 'R', color: 'black' },
-    27: { name: 'S', color: 'white' },
-    28: { name: 'T', color: 'darkred' },
-    29: { name: 'U', color: 'darkblue' },
-    30: { name: 'V', color: 'purple' },
-    31: { name: 'W', color: 'red' },
-    32: { name: 'X', color: 'yellow' },
-    33: { name: 'Y', color: 'lime' },
-  }
-
   // Main function
 
   useEffect(() => {
     const runModel = async () => {
-      let global_model_02 = "https://raw.githubusercontent.com/EricMartinezIllamola/global-model-02/main/model.json";
-      let global_model_03 = "https://raw.githubusercontent.com/EricMartinezIllamola/global-model-03/main/model.json";
+      const num_model_04 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
+      const num_model_06 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-06/main/model.json";
 
-      const model = await tf.loadGraphModel(global_model_03);
+      const model = await tf.loadGraphModel(num_model_06);
       console.log("Model loaded.");
 
       //  Loop and detect hands
@@ -134,6 +98,18 @@ function App() {
             results = results.slice(-10);
 
             // Draw Cuadrado y Results
+            const labelMap = {
+              0: { name: '0', color: 'purple' },
+              1: { name: '1', color: 'red' },
+              2: { name: '2', color: 'yellow' },
+              3: { name: '3', color: 'lime' },
+              4: { name: '4', color: 'blue' },
+              5: { name: '5', color: 'orange' },
+              6: { name: '6', color: 'black' },
+              7: { name: '7', color: 'white' },
+              8: { name: '8', color: 'darkred' },
+              9: { name: '9', color: 'darkblue' },
+            }
 
             const drawRect = (predictedValue, ctx, x, y, width, height) => {
               // Set styling
@@ -165,24 +141,26 @@ function App() {
     runModel();
   }, []);
 
-  const save = () => {
-    localStorage.setItem("x", document.getElementById("x").value);
-    localStorage.setItem("y", document.getElementById("y").value);
-    setX(parseInt(localStorage.getItem("x")));
-    setY(parseInt(localStorage.getItem("y")));
-
-  }
+  // const save = () => {
+  //   localStorage.setItem("x", document.getElementById("x").value);
+  //   localStorage.setItem("y", document.getElementById("y").value);
+  //   setX(parseInt(localStorage.getItem("x")));
+  //   setY(parseInt(localStorage.getItem("y")));
+  // }
 
   useEffect(() => {
-    if (results.filter(x => x == referencia).length == 7) {
+    if (results.filter(x => x === referencia).length === 7) {
       setResults([]);
       if (timer > 0 && start) {
         setPoints(points + 1);
         setReferencia(randomElement(numArray));
       }
-      else if (timer == 0 && start) {
+      else if (timer <= 0 && start) {
         setReferencia(randomElement(numArray));
       }
+    }
+    else if (timer <= 0 && start) {
+      setEnd(true);
     }
   }, [results]);
 
@@ -246,89 +224,29 @@ function App() {
             zindex: 8,
             width: 640,
             height: 480,
+            // visibility: "hidden",
           }}
         />
-        <img className="img_ejemplo" src={require("./SignosGlobal/" + referencia + ".jpg")}></img>
-        <div><p className="num_ejemplo">{labelMap[referencia]['name']}</p></div>
-        <div><p className="points">{points}</p></div>
-        <div><p className="timer">{timer < 10 ? "0" + timer : timer}</p></div>
+        <div className="left_side">
+          <div className="left_up">
+            <div className="left_up_mono"><img className={end? "camara_mono camara_mono_salta" : "camara_mono"} src={require("./mascots/monohojas.png")}></img></div>
+            <div className="left_up_points">
+              <div><p className="timer">{timer < 10 ? "Time: 0" + timer : "Time: " + timer}</p></div>
+              <div><p className="points">{"Points: " + points}</p></div>
+            </div>
+          </div>
+          <div className="left_center">
+            <img className="num_ejemplo" src={require("./global/" + referencia + ".png")}></img>
+          </div>
+        </div>
         <button className="btn-exit" onClick={() => { }}>EXIT</button>
       </div>
     );
   }
-  else if (!start && !dz) {
+  else if (!start) {
     return (
       <div className="App">
 
-        <Webcam
-          className="web"
-          ref={webcamRef}
-          muted={true}
-          // mirrored={true}  
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            top: 100,
-            left: 500,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
-
-        <canvas
-          ref={canvasRef2}
-          id="canvas2"
-          // mirrored={true}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            top: 100,
-            left: 500,
-            right: 0,
-            textAlign: "center",
-            zindex: 8,
-            width: 640,
-            height: 480,
-          }}
-        />
-
-        <canvas
-          ref={canvasRef}
-          id="canvas"
-          // mirrored={true}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: -2500,
-            right: 0,
-            textAlign: "center",
-            zindex: 8,
-            width: 640,
-            height: 480,
-            // visibility: "hidden",
-          }}
-        />
-        {/* <img className="img_ejemplo" src={require("./SignosNumeros/" + referencia + ".jpg")}></img>
-        <div><p className="num_ejemplo">{referencia}</p></div> */}
-        <div><p className="points">{points}</p></div>
-        <div><p className="timer">{timer < 10 ? "0" + timer : timer}</p></div>
-        <button className="btn-start" onClick={() => { setStart(!start); setTimer(timer + 1); setReferencia(randomElement(numArray)) }}>START</button>
-        <button className="btn-dz" onClick={() => { setDz(!dz); }}>Square</button>
-        <button className="btn-exit" onClick={() => { }}>EXIT</button>
-      </div>
-    )
-  }
-
-  else if (!start && dz) {
-    return (
-      <section>
-        <div className="App">
           <Webcam
             className="web"
             ref={webcamRef}
@@ -349,6 +267,7 @@ function App() {
           />
 
           <canvas
+            className="canvas2"
             ref={canvasRef2}
             id="canvas2"
             // mirrored={true}
@@ -369,6 +288,7 @@ function App() {
           <canvas
             ref={canvasRef}
             id="canvas"
+            className="canvas"
             // mirrored={true}
             style={{
               position: "absolute",
@@ -380,29 +300,116 @@ function App() {
               zindex: 8,
               width: 640,
               height: 480,
+              // visibility: "hidden",
             }}
           />
-          {/* <img className="img_ejemplo" src={require("./SignosNumeros/" + referencia + ".jpg")}></img>
-        <div><p className="num_ejemplo">{referencia}</p></div> */}
+
+        <div className="left_side">
+          <div className="left_up">
+            <div className="left_up_mono"><img className="camara_mono" src={require("./mascots/monohojas.png")}></img></div>
+            <div className="left_up_points">
+              <div><p className="timer">{timer < 10 ? "Time: 0" + timer : "Time: " + timer}</p></div>
+              <div><p className="points">{"Points: " + points}</p></div>
+            </div>
+          </div>
+          <div className="left_start">
+            <button className="btn_start" onClick={() => { setStart(!start); setTimer(timer + 1); setReferencia(randomElement(numArray)) }}>START</button>
+            <button className="btn_exit" onClick={() => { }}>MENU</button>
+          </div>
         </div>
-        <div><p className="points">{points}</p></div>
-        <div><p className="timer">{timer < 10 ? "0" + timer : timer}</p></div>
-        <form action="" onSubmit={() => { setDz(!dz); save() }}>
-          <label name="x">X</label>
-          <input type="number" name="x" id="x"></input>
-          <label name="y">Y</label>
-          <input type="number" name="y" id="y"></input>
-          <label name="width">Width</label>
-          <input type="number" name="width"></input>
-          <label name="height">Height</label>
-          <input type="number" name="height"></input>
-          <button type="Submit" className="btn-save" >Save</button>
-          {/* onClick={ () => { setDz(!dz)} } */}
-        </form>
-        <button className="btn-reset">Reset</button>
-      </section>
+        {/* <button className="btn-dz" onClick={() => { setDz(!dz); }}>Square</button> */}
+      </div>
     )
   }
+
+
+
+
+
+
+
+
+
+
+
+  // else if (!start && dz) {
+  //   return (
+  //     <section>
+  //       <div className="App">
+  //         <Webcam
+  //           className="web"
+  //           ref={webcamRef}
+  //           muted={true}
+  //           // mirrored={true}  
+  //           style={{
+  //             position: "absolute",
+  //             marginLeft: "auto",
+  //             marginRight: "auto",
+  //             top: 100,
+  //             left: 500,
+  //             right: 0,
+  //             textAlign: "center",
+  //             zindex: 9,
+  //             width: 640,
+  //             height: 480,
+  //           }}
+  //         />
+
+  //         <canvas
+  //           ref={canvasRef2}
+  //           id="canvas2"
+  //           // mirrored={true}
+  //           style={{
+  //             position: "absolute",
+  //             marginLeft: "auto",
+  //             marginRight: "auto",
+  //             top: 100,
+  //             left: 500,
+  //             right: 0,
+  //             textAlign: "center",
+  //             zindex: 8,
+  //             width: 640,
+  //             height: 480,
+  //           }}
+  //         />
+
+  //         <canvas
+  //           ref={canvasRef}
+  //           id="canvas"
+  //           // mirrored={true}
+  //           style={{
+  //             position: "absolute",
+  //             marginLeft: "auto",
+  //             marginRight: "auto",
+  //             left: -2500,
+  //             right: 0,
+  //             textAlign: "center",
+  //             zindex: 8,
+  //             width: 640,
+  //             height: 480,
+  //           }}
+  //         />
+  //         {/* <img className="img_ejemplo" src={require("./SignosNumeros/" + referencia + ".jpg")}></img>
+  //       <div><p className="num_ejemplo">{referencia}</p></div> */}
+  //       </div>
+  //       <div><p className="points">{points}</p></div>
+  //       <div><p className="timer">{timer < 10 ? "0" + timer : timer}</p></div>
+  //       <form action="" onSubmit={() => { setDz(!dz); save() }}>
+  //         <label name="x">X</label>
+  //         <input type="number" name="x" id="x"></input>
+  //         <label name="y">Y</label>
+  //         <input type="number" name="y" id="y"></input>
+  //         <label name="width">Width</label>
+  //         <input type="number" name="width"></input>
+  //         <label name="height">Height</label>
+  //         <input type="number" name="height"></input>
+  //         <button type="Submit" className="btn-save" >Save</button>
+  //         {/* onClick={ () => { setDz(!dz)} } */}
+  //       </form>
+  //       <button className="btn-reset">Reset</button>
+  //     </section>
+  //   )
+  // }
 }
 
 export default App;

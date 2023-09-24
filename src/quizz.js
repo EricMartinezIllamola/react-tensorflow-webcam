@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import "./quizz.css";
 
 function randomElement(array) {
     return array[Math.floor(Math.random() * array.length)]
@@ -56,10 +57,6 @@ function App() {
             setEnd(true);
         }
     }, [referencia])
-
-    // useEffect(() => {
-        
-    // }, [true])
 
     return (
         <div className="quizz">

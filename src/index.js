@@ -6,6 +6,7 @@ import Num_02 from './num_02';
 import Num_03 from './num_03';
 import Num_04 from './num_04';
 import Num_05 from './num_05';
+import Num_05B from './num_05B';
 import Alpha_02 from './alphabet_02';
 import Alpha_05 from './alphabet_05';
 import Global_02 from './global_02';
@@ -16,7 +17,7 @@ import Players from "./player_selector";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Players />
+    <Num_05 />
   </React.StrictMode>,
   document.getElementById('root')
 );
