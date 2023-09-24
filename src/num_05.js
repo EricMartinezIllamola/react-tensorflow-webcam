@@ -2,7 +2,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import Webcam from "react-webcam";
-// import "./camara.css";
 import "./camara_05.css";
 
 
@@ -27,11 +26,10 @@ function App() {
 
   const [start, setStart] = useState(false);
   const [end, setEnd] = useState(false);
-  // const [dz, setDz] = useState(false);
 
   // Detection Zone y Cuadrado
-  let [x, setX] = useState(localStorage.getItem("x") ? parseInt(localStorage.getItem("x")) : 25);
-  let [y, setY] = useState(localStorage.getItem("y") ? parseInt(localStorage.getItem("y")) : 25);
+  const [x, setX] = useState(25);
+  const [y, setY] = useState(25);
   const [width, setWidth] = useState(320);
   const [height, setHeight] = useState(240);
 
@@ -39,8 +37,8 @@ function App() {
 
   useEffect(() => {
     const runModel = async () => {
-      const num_model_04 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
-      const num_model_06 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-06/main/model.json";
+      // const num_model_04 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
+      const num_model_06 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-06-B/main/model.json";
 
       const model = await tf.loadGraphModel(num_model_06);
       console.log("Model loaded.");
@@ -72,15 +70,6 @@ function App() {
             canvasRef2.current.width = videoWidth;
             canvasRef2.current.height = videoHeight;
 
-            // if (parseInt(localStorage.getItem("x")) != x) {
-            //   x = parseInt(localStorage.getItem("x"));
-            // }
-
-            // if (parseInt(localStorage.getItem("y")) != y) {
-            //   y = parseInt(localStorage.getItem("y"));
-            // }
-
-            // const frame = webcamRef.current.getScreenshot()
             const canvas = document.getElementById("canvas");
 
             // Draw Detection Zone
@@ -141,13 +130,6 @@ function App() {
     runModel();
   }, []);
 
-  // const save = () => {
-  //   localStorage.setItem("x", document.getElementById("x").value);
-  //   localStorage.setItem("y", document.getElementById("y").value);
-  //   setX(parseInt(localStorage.getItem("x")));
-  //   setY(parseInt(localStorage.getItem("y")));
-  // }
-
   useEffect(() => {
     if (results.filter(x => x === referencia).length === 7) {
       setResults([]);
@@ -177,7 +159,6 @@ function App() {
           className="web"
           ref={webcamRef}
           muted={true}
-          // mirrored={true}  
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -195,7 +176,6 @@ function App() {
         <canvas
           ref={canvasRef2}
           id="canvas2"
-          // mirrored={true}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -213,7 +193,6 @@ function App() {
         <canvas
           ref={canvasRef}
           id="canvas"
-          // mirrored={true}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -224,7 +203,6 @@ function App() {
             zindex: 8,
             width: 640,
             height: 480,
-            // visibility: "hidden",
           }}
         />
         <div className="left_side">
@@ -236,8 +214,8 @@ function App() {
             </div>
           </div>
           <div className="left_center">
-            <img className="num_ejemplo" src={require("./global/" + referencia + ".png")}></img>
-            <img className="img_ejemplo" src={require("./global/" + referencia + "B.png")}></img>
+            <img className="num_ejemplo" src={require("./global_camara/" + referencia + ".png")}></img>
+            <img className="img_ejemplo" src={require("./global_camara/" + referencia + "B.png")}></img>
           </div>
         </div>
         <button className="btn-exit" onClick={() => { }}>EXIT</button>
@@ -251,8 +229,7 @@ function App() {
         <Webcam
           className="web"
           ref={webcamRef}
-          muted={true}
-          // mirrored={true}  
+          muted={true} 
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -270,7 +247,6 @@ function App() {
         <canvas
           ref={canvasRef2}
           id="canvas2"
-          // mirrored={true}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -288,7 +264,6 @@ function App() {
         <canvas
           ref={canvasRef}
           id="canvas"
-          // mirrored={true}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -299,7 +274,6 @@ function App() {
             zindex: 8,
             width: 640,
             height: 480,
-            // visibility: "hidden",
           }}
         />
         <div className="left_side">
@@ -315,99 +289,9 @@ function App() {
             <button className="btn_exit" onClick={() => { }}>MENU</button>
           </div>
         </div>
-        {/* <button className="btn-dz" onClick={() => { setDz(!dz); }}>Square</button> */}
       </div>
     )
   }
-
-
-
-
-
-
-
-
-
-
-
-  // else if (!start && dz) {
-  //   return (
-  //     <section>
-  //       <div className="App">
-  //         <Webcam
-  //           className="web"
-  //           ref={webcamRef}
-  //           muted={true}
-  //           // mirrored={true}  
-  //           style={{
-  //             position: "absolute",
-  //             marginLeft: "auto",
-  //             marginRight: "auto",
-  //             top: 100,
-  //             left: 500,
-  //             right: 0,
-  //             textAlign: "center",
-  //             zindex: 9,
-  //             width: 640,
-  //             height: 480,
-  //           }}
-  //         />
-
-  //         <canvas
-  //           ref={canvasRef2}
-  //           id="canvas2"
-  //           // mirrored={true}
-  //           style={{
-  //             position: "absolute",
-  //             marginLeft: "auto",
-  //             marginRight: "auto",
-  //             top: 100,
-  //             left: 500,
-  //             right: 0,
-  //             textAlign: "center",
-  //             zindex: 8,
-  //             width: 640,
-  //             height: 480,
-  //           }}
-  //         />
-
-  //         <canvas
-  //           ref={canvasRef}
-  //           id="canvas"
-  //           // mirrored={true}
-  //           style={{
-  //             position: "absolute",
-  //             marginLeft: "auto",
-  //             marginRight: "auto",
-  //             left: -2500,
-  //             right: 0,
-  //             textAlign: "center",
-  //             zindex: 8,
-  //             width: 640,
-  //             height: 480,
-  //           }}
-  //         />
-  //         {/* <img className="img_ejemplo" src={require("./SignosNumeros/" + referencia + ".jpg")}></img>
-  //       <div><p className="num_ejemplo">{referencia}</p></div> */}
-  //       </div>
-  //       <div><p className="points">{points}</p></div>
-  //       <div><p className="timer">{timer < 10 ? "0" + timer : timer}</p></div>
-  //       <form action="" onSubmit={() => { setDz(!dz); save() }}>
-  //         <label name="x">X</label>
-  //         <input type="number" name="x" id="x"></input>
-  //         <label name="y">Y</label>
-  //         <input type="number" name="y" id="y"></input>
-  //         <label name="width">Width</label>
-  //         <input type="number" name="width"></input>
-  //         <label name="height">Height</label>
-  //         <input type="number" name="height"></input>
-  //         <button type="Submit" className="btn-save" >Save</button>
-  //         {/* onClick={ () => { setDz(!dz)} } */}
-  //       </form>
-  //       <button className="btn-reset">Reset</button>
-  //     </section>
-  //   )
-  // }
 }
 
 export default App;

@@ -30,8 +30,8 @@ function App() {
   // const [dz, setDz] = useState(false);
 
   // Detection Zone y Cuadrado
-  let [x, setX] = useState(localStorage.getItem("x") ? parseInt(localStorage.getItem("x")) : 25);
-  let [y, setY] = useState(localStorage.getItem("y") ? parseInt(localStorage.getItem("y")) : 25);
+  const [x, setX] = useState(25);
+  const [y, setY] = useState(25);
   const [width, setWidth] = useState(320);
   const [height, setHeight] = useState(240);
 
@@ -39,7 +39,7 @@ function App() {
 
   useEffect(() => {
     const runModel = async () => {
-      const num_model_04 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
+      // const num_model_04 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-04/main/model.json";
       const num_model_06 = "https://raw.githubusercontent.com/EricMartinezIllamola/num-model-06/main/model.json";
 
       const model = await tf.loadGraphModel(num_model_06);
@@ -236,7 +236,7 @@ function App() {
             </div>
           </div>
           <div className="left_center">
-            <img className="num_ejemplo" src={require("./global/" + referencia + ".png")}></img>
+            <img className="num_ejemplo" src={require("./global_camara/" + referencia + ".png")}></img>
           </div>
         </div>
         <button className="btn-exit" onClick={() => { }}>EXIT</button>

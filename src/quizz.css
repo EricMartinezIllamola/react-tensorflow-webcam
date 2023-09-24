@@ -6,6 +6,7 @@
 .quizz {
   background-image: url(./monitos.png);
   background-size: 80px;
+  height: 100vh;
 }
 
 .quizz_mono {
@@ -89,7 +90,7 @@
 }
 
 .quizz_up {
-  height: 45vh;
+  height: 40vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,21 +118,49 @@ p {margin: 0;}
 .quizz_down {
   display: flex;
   justify-content: center;
-  height: 55vh;
+  height: 50vh;
   gap: 50px;
+  /* margin-bottom: 50px; */
 }
 
-.quizz_down button {
+.quizz_down button .quizz_numB {
   height: 320px;
   width: 220px;
+  object-fit: contain;
 }
 
-.quizz_down button:hover {
+.quizz_down .quizz_cards:hover {
   background-color: lightgreen;
 }
 
-.quizz_numB {
-  height: 300px;
-  width: 200px;
-  object-fit: contain;
+.quizz_exit:hover, .quizz_continue:hover  {
+  background-color: orange;
+  border: 3px solid rgba(0, 0, 0, 0.7);
+}
+
+.quizz_exit, .quizz_continue {
+  height: fit-content;
+  font-size: 30px;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: rgba(255, 166, 0, 0.8);
+  border: 3px solid orange;
+  color: #000;
+  align-self: self-end;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.show {
+  visibility: visible;
+}
+
+/* .quizz_continue {
+  height: fit-content;
+  font-size: 30px;
+} */
+
+
+.quizz_expand {
+  height: 10vh;
 }

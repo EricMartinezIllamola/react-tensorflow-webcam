@@ -13,11 +13,12 @@ import Global_02 from './global_02';
 import Global_05 from './global_05';
 import Quizz from "./quizz";
 import Players from "./player_selector";
+import Num_06 from './num_06';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Num_05 />
+    <Alpha_05 />
   </React.StrictMode>,
   document.getElementById('root')
 );
